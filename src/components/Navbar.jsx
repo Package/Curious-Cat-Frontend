@@ -1,11 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { isLoggedIn } from '../auth';
 
 export const Navbar = () => {
-
-    const isLoggedIn = () => {
-        return localStorage.getItem("authToken") != null;
-    }
 
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -28,9 +25,14 @@ export const Navbar = () => {
                     }
 
                     {isLoggedIn() &&
-                        <li className="nav-item">
-                            <Link to="/logout" className="nav-link">Logout</Link>
-                        </li>
+                        <>
+                            <li className="nav-item">
+                                <Link to="/profile" className="nav-link">My Profile</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/logout" className="nav-link">Logout</Link>
+                            </li>
+                        </>
                     }
                 </ul>
                 <form className="form-inline my-2 my-lg-0">

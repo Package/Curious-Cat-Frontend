@@ -5,20 +5,22 @@ import { Navbar } from './components/Navbar';
 import { Register } from './components/Register';
 import { Login } from './components/Login';
 import { Logout } from './components/Logout';
+import { Profile } from './components/Profile';
 
 function App() {
     return (
         <React.Fragment>
             <Router>
                 <Navbar />
-                <Switch>
-                    <div id="contentWrapper" className="container">
+                <div id="contentWrapper" className="container">
+                    <Switch>
                         <Route path="/" exact component={Home} />
+                        <Route path="/profile/:id?" component={Profile} />
                         <Route path="/register" component={Register} />
                         <Route path="/login" component={Login} />
                         <Route path="/logout" component={Logout} />
-                    </div>
-                </Switch>
+                    </Switch>
+                </div>
             </Router>
         </React.Fragment>
     );
