@@ -1,13 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useReducer } from 'react'
 import Axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
+import loginReducer from '../../reducers/loginReducer';
+
+const initialState = {
+    usernameOrEmail: '',
+    password: '',
+    success: '',
+    error: ''
+}
 
 export const Login = () => {
 
-    const [usernameOrEmail, setUsernameOrEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [success, setSuccess] = useState('')
-    const [error, setError] = useState('')
+    const [loginState, dispatch] = useReducer(loginReducer, initialState);
+    const { usernameOrEmail, password, success, error } = loginState;
+    const user = useContext(UserContext)
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -16,10 +24,10 @@ export const Login = () => {
             "userOrEmail": usernameOrEmail,
             "password": password
         }).then(res => {
-            localStorage.setItem("authToken", res.data.authorization_token);
-            setSuccess(res.data.message);
+            dispatch({ type: "login", message: res.data.message })
+            user.login(res.data.authorization_token);
         }).catch(err => {
-            setError(err.response.data.message);
+            dispatch({ type: "error", message: err.response.data.message });
         });
     }
 
@@ -40,13 +48,14 @@ export const Login = () => {
             <form onSubmit={onSubmit} >
                 <div className="form-group">
                     <label htmlFor="usernameOrEmail">Username</label>
-                    <input type="text" className="form-control" id="usernameOrEmail" aria-describedby="usernameHelp" placeholder="Username Or Email Address" value={usernameOrEmail} onChange={(e) => setUsernameOrEmail(e.target.value)} />
+                    <input type="text" className="form-control" id="usernameOrEmail" aria-describedby="usernameHelp" placeholder="Username Or Email Address" value={usernameOrEmail} onChange={(e) => dispatch({ type: "updateField", field: "usernameOrEmail", value: e.target.value })} />
                     <small id="usernameHelp" className="form-text text-muted">You can login using either your username or email address.</small>
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="password">Password</label>
-                    <input type="password" className="form-control" id="password" aria-describedby="passwordHelp" placeholder="Enter Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <input type="password" className="form-control" id="password" aria-describedby="passwordHelp"
+                        placeholder="Enter Password" value={password} onChange={(e) => dispatch({ type: "updateField", field: "password", value: e.target.value })} />
                 </div>
 
                 <button type="submit" className="btn btn-primary">Login</button>

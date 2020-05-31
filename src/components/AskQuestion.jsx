@@ -41,20 +41,23 @@ export const AskQuestion = ({userId}) => {
     }
 
     return (
-        <div className="questionForm mb-4">
-            <FlashMessage type="success" message={success}/>
-            <FlashMessage type="error" message={error}/>
+        <div className="panel">
+            <h2>Ask a Question!</h2>
+            <div className="questionForm mb-4">
+                <FlashMessage type="success" message={success}/>
+                <FlashMessage type="error" message={error}/>
 
-            <form onSubmit={askQuestion}>
-                <div className="form-group">
-                    <textarea className="form-control" id="question" rows="3" placeholder="Ask a question..." value={question} onChange={(e) => setQuestion(e.target.value)}/>
-                </div>
-                <div className="form-check mb-2">
-                    <input type="checkbox" className="form-check-input" id="anonymous" value={anonymous} onChange={(e) => setAnonymous(e.target.checked)}/>
-                    <label className="form-check-label" htmlFor="exampleCheck1">Ask Anonymously</label>
-                </div>
-                <button type="submit" className="btn btn-primary">Ask Question</button>
-            </form>
+                <form onSubmit={askQuestion}>
+                    <div className="form-group">
+                        <textarea className="form-control" id="question" rows="7" placeholder="Enter Question..." value={question} onChange={(e) => setQuestion(e.target.value)}/>
+                    </div>
+                    <div className="form-check mb-2">
+                        <input type="checkbox" className="form-check-input" id="anonymous" value={anonymous} onChange={(e) => setAnonymous(e.target.checked)}/>
+                        <label className="form-check-label" htmlFor="exampleCheck1">Ask Anonymously</label>
+                    </div>
+                    <button type="submit" className="btn btn-primary">Send</button>
+                </form>
+            </div>
         </div>
     );
 };

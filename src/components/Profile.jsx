@@ -18,7 +18,7 @@ export const Profile = () => {
     const [isFollowing, setIsFollowing] = useState(false)
 
     useEffect(() => {
-        if (loading) {
+        if (loading || id !== data.info.user_id) {
             Axios.get(profileEndPoint(), buildAuthorizationHeader()).then(res => {
                 console.log(res.data);
                 setData(res.data);
@@ -65,20 +65,29 @@ export const Profile = () => {
 
     return (
         <div>
-            <h1 className="display-4">{data.info.username}</h1>
+            <div className="row">
+                <div className="col-md-4">
 
-            <FollowButton userId={id} isFollowing={isFollowing}
-                          ownProfile={data.info.own_profile} onFollow={onFollow}/>
+                    <h1 className="display-4">{data.info.username}</h1>
 
-            <ul>
-                <li><strong>Joined:</strong> {data.info.created_at}</li>
-                <li><strong>Followers:</strong> {followers}</li>
-                <li><strong>Following:</strong> {following}</li>
-            </ul>
+                    <div className="panel">
+                        <FollowButton userId={id} isFollowing={isFollowing}
+                                      ownProfile={data.info.own_profile} onFollow={onFollow}/>
+                        <ul>
+                            <li><strong>Joined:</strong> {data.info.created_at}</li>
+                            <li><strong>Followers:</strong> {followers}</li>
+                            <li><strong>Following:</strong> {following}</li>
+                        </ul>
+                    </div>
 
-            {!data.info.own_profile && <AskQuestion userId={id}/>}
+                    {!data.info.own_profile && <AskQuestion userId={id}/>}
 
-            <QuestionGrid questions={data.answers}/>
+                </div>
+                <div className="col-md-8">
+                    <QuestionGrid questions={data.answers}/>
+                </div>
+            </div>
+
         </div>
     )
 }

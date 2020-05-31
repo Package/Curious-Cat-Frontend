@@ -21,9 +21,9 @@ export const FollowButton = ({userId, isFollowing, ownProfile, onFollow}) => {
     }
 
     if (isFollowing) {
-        return <p><button className="btn btn-danger" onClick={(e) => follow('unfollow')}>Unfollow</button></p>
+        return <p><button className="btn btn-outline-danger" onClick={(e) => follow('unfollow')}>Unfollow</button></p>
     } else {
-        return <p><button className="btn btn-success" onClick={(e) => follow('follow')}>Follow</button></p>
+        return <p><button className="btn btn-outline-success" onClick={(e) => follow('follow')}>Follow</button></p>
     }
 };
 

@@ -1,15 +1,57 @@
 $lightGrey: #f3f3f3
 $borderColour: #dee2e6
 
+$bodyColor: #f3f3f3
+$contentColor: #fff
+$textColor: #f7f7f7
+$intelBlue: #0071c5
+
 body
-    background: $lightGrey
+    background: $bodyColor
 
 #contentWrapper
     margin-top: 20px
 
-.question, .user, .notification
-    border: 1px solid $borderColour
-    border-radius: 8px
+.btn-primary
+    background: $intelBlue !important
+
+.navbar
+    background: $intelBlue !important
+
+.question, .user, .notification, .panel
+    border-radius: 5px
     margin-bottom: 1em
-    background: #ffffff
-    padding: 1em 2em
+    background: $contentColor
+    padding: 1em 1em .5em 1em
+    box-shadow: 0 0 5px 0 rgba(0,0,0,.3)
+
+.timestamp
+    color: #6c757d
+    margin-left: .5em
+
+.initials
+    margin-right: .25em
+    margin-top: .25em
+    padding: .25em
+    color: #ffffff
+    font-weight: bold
+    text-transform: uppercase
+    background: $intelBlue
+
+.panel
+    h1, h2, h3, h4, h5, h6
+        border-bottom: 1px solid #eee
+        font-size: 1em
+        margin-bottom: 1em
+        padding-bottom: .25em
+
+.question
+    padding-top: 1.5em
+    padding-left: 1.5em
+
+    .label
+        padding-top: .5em
+
+    &--answer
+        margin-left: 2.5em
+        margin-top: 1.5em

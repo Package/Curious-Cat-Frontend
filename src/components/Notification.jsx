@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import useNotification from "../hooks/useNotification";
 import Moment from "react-moment";
+import {ProfileInitials} from "./ProfileInitials";
 
 export const Notification = () => {
 
@@ -24,7 +25,10 @@ export const Notification = () => {
 
             {notifications.map((n) => <div className="notification" key={n.id}>
                 <p>
-                    <Link to={`/profile/${n.from_user}`}>{n.from_username}</Link> {n.notification_type_string}
+                    <ProfileInitials username={n.from_username} />
+                    <Link to={`/profile/${n.from_user}`}>
+                        {n.from_username}
+                    </Link> {n.notification_type_string}
                 </p>
 
                 {n.context != null &&

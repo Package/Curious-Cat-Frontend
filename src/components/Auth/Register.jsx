@@ -1,15 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useReducer } from 'react'
 import Axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
+import { UserContext } from '../../context/UserContext'
+import registerReducer from '../../reducers/registerReducer'
+
+const initialState = {
+    username: '',
+    emailAddress: '',
+    password: '',
+    confirmPassword: '',
+    success: '',
+    error: ''
+}
 
 export const Register = () => {
 
-    const [username, setUsername] = useState('')
-    const [emailAddress, setEmailAddress] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-    const [success, setSuccess] = useState('')
-    const [error, setError] = useState('')
+    const [registerState, dispatch] = useReducer(registerReducer, initialState)
+    const { username, emailAddress, password, confirmPassword, success, error } = registerState;
+
+    const user = useContext(UserContext);
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -20,12 +29,10 @@ export const Register = () => {
             "password": password,
             "confirm_password": confirmPassword
         }).then(res => {
-            localStorage.setItem("authToken", res.data.authorization_token);
-            setSuccess(res.data.message);
-            setError('');
+            user.login(res.data.authorization_token);
+            dispatch({ type: "register", message: res.data.message })
         }).catch(err => {
-            setError(err.response.data.message);
-            setSuccess('');
+            dispatch({ type: "error", message: err.response.data.message })
         });
     }
 
@@ -40,32 +47,28 @@ export const Register = () => {
             }
 
             {success.length > 0 &&
-                <div className="alert alert-success">
-                    <p>
-                        {success} <Link to="/">Click here</Link> to go to the homepage.
-                    </p>
-                </div>
+                <Redirect to="/" />
             }
 
             <form onSubmit={onSubmit}>
                 <div className="form-group">
                     <label htmlFor="username">Username</label>
-                    <input type="text" className="form-control" id="username" aria-describedby="usernameHelp" placeholder="Choose Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                    <input type="text" className="form-control" id="username" aria-describedby="usernameHelp" placeholder="Choose Username" value={username} onChange={(e) => dispatch({ type: "updateField", field: "username", value: e.target.value })} />
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="emailAddress">Email address</label>
-                    <input type="email" className="form-control" id="emailAddress" aria-describedby="emailHelp" placeholder="Enter Email Address" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} />
+                    <input type="email" className="form-control" id="emailAddress" aria-describedby="emailHelp" placeholder="Enter Email Address" value={emailAddress} onChange={(e) => dispatch({ type: "updateField", field: "emailAddress", value: e.target.value })} />
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="password">Password</label>
-                    <input type="password" className="form-control" id="password" aria-describedby="passwordHelp" placeholder="Choose Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <input type="password" className="form-control" id="password" aria-describedby="passwordHelp" placeholder="Choose Password" value={password} onChange={(e) => dispatch({ type: "updateField", field: "password", value: e.target.value })} />
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="confirmPassword">Confirm password</label>
-                    <input type="password" className="form-control" id="confirmPassword" aria-describedby="confirmPasswordHelp" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                    <input type="password" className="form-control" id="confirmPassword" aria-describedby="confirmPasswordHelp" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => dispatch({ type: "updateField", field: "confirmPassword", value: e.target.value })} />
                 </div>
 
                 <button type="submit" className="btn btn-primary">Register</button>
