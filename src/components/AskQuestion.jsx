@@ -1,11 +1,14 @@
 import React, {useState} from 'react';
 import Axios from "axios";
 import {buildHeader} from "../auth";
+import {FlashMessage} from "./FlashMessage";
 
-export const AskQuestion = ({userId, onQuestionAsked}) => {
+export const AskQuestion = ({userId}) => {
 
     const [question, setQuestion] = useState('');
     const [anonymous, setAnonymous] = useState(false);
+    const [success, setSuccess] = useState('')
+    const [error, setError] = useState('')
 
     /**
      * Handles asking a question.
@@ -17,6 +20,7 @@ export const AskQuestion = ({userId, onQuestionAsked}) => {
         e.preventDefault()
 
         if (question.length === 0) {
+            setError('Please enter something to ask!');
             return false;
         }
 
@@ -29,11 +33,18 @@ export const AskQuestion = ({userId, onQuestionAsked}) => {
                 "name_hidden": anonymous
             },
             headers: buildHeader()
-        }).then(_ => onQuestionAsked()).catch(err => console.log(err))
+        }).then(_ => {
+            setSuccess('Your question has been asked.');
+            setError('');
+            setQuestion('');
+        }).catch(err => setError(err.response.data.message))
     }
 
     return (
         <div className="questionForm mb-4">
+            <FlashMessage type="success" message={success}/>
+            <FlashMessage type="error" message={error}/>
+
             <form onSubmit={askQuestion}>
                 <div className="form-group">
                     <textarea className="form-control" id="question" rows="3" placeholder="Ask a question..." value={question} onChange={(e) => setQuestion(e.target.value)}/>
