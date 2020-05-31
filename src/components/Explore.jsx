@@ -49,7 +49,7 @@ export const Explore = () => {
             <form onSubmit={onSubmit} className="form-inline">
                 <label className="sr-only" htmlFor="query">Enter Search Query</label>
                 <input type="text" className="form-control mb-2 mr-sm-2" id="query" placeholder="Enter Search" value={search} onChange={(e) => setSearch(e.target.value)} />
-                <button type="submit" className="btn btn-dark mb-2">Search</button>
+                <button type="submit" className="btn btn-primary mb-2">Search</button>
             </form>
 
             {hasResults() && <>

@@ -72,7 +72,7 @@ export const Register = () => {
                     {/* <small id="confirmPasswordHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
                 </div>
 
-                <button type="submit" className="btn btn-dark">Register</button>
+                <button type="submit" className="btn btn-primary">Register</button>
             </form>
         </>
     )

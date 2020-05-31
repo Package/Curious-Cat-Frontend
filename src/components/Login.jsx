@@ -50,7 +50,7 @@ export const Login = () => {
                     <input type="password" className="form-control" id="password" aria-describedby="passwordHelp" placeholder="Enter Password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
 
-                <button type="submit" className="btn btn-dark">Login</button>
+                <button type="submit" className="btn btn-primary">Login</button>
             </form>
         </>
     )

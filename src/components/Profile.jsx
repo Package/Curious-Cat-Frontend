@@ -1,24 +1,34 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect} from 'react'
 import Axios from 'axios'
-import { Loading } from './Loading';
-import { buildAuthorizationHeader, buildHeader } from '../auth';
-import { useParams } from 'react-router-dom';
-import { QuestionGrid } from './QuestionGrid';
+import {Loading} from './Loading';
+import {buildAuthorizationHeader, buildHeader} from '../auth';
+import {useParams} from 'react-router-dom';
+import {QuestionGrid} from './QuestionGrid';
+import {AskQuestion} from "./AskQuestion";
 
 export const Profile = () => {
 
+    const {id} = useParams();
     const [data, setData] = useState({})
-    const { id } = useParams();
     const [loading, setLoading] = useState(true);
     const [currentTab, setCurrentTab] = useState('questions');
 
+    const [followers, setFollowers] = useState(0)
+    const [following, setFollowing] = useState(0)
+    const [isFollowing, setIsFollowing] = useState(false)
+
     useEffect(() => {
-        Axios.get(profileEndPoint(), buildAuthorizationHeader()).then(res => {
-            console.log(res.data);
-            setData(res.data);
-            setLoading(false);
-        }).catch(err => console.log(err));
-    }, [id])
+        if (loading) {
+            Axios.get(profileEndPoint(), buildAuthorizationHeader()).then(res => {
+                console.log(res.data);
+                setData(res.data);
+                setFollowers(res.data.info.follower_count);
+                setFollowing(res.data.info.following_count);
+                setIsFollowing(res.data.info.is_following);
+                setLoading(false)
+            }).catch(err => console.log(err));
+        }
+    }, [id, loading])
 
     /**
      * Builds the endpoint to retrieve information on the profile.
@@ -27,7 +37,7 @@ export const Profile = () => {
      */
     const profileEndPoint = () => {
         let profileEndPoint = '/api/profile.php';
-        if (id != undefined) {
+        if (id !== undefined) {
             profileEndPoint = `${profileEndPoint}?id=${id}`;
         }
 
@@ -41,52 +51,56 @@ export const Profile = () => {
         if (data.info.own_profile)
             return false;
 
-        if (data.info.is_following) {
-            return (
-                <button className="btn btn-dark" onClick={(e) => follow(data.info.user_id, 'unfollow')}>Unfollow</button>
-            )
+        if (isFollowing) {
+            return <button className="btn btn-danger"
+                           onClick={(e) => follow(data.info.user_id, 'unfollow')}>Unfollow</button>
         } else {
-            return (
-                <button className="btn btn-dark" onClick={(e) => follow(data.info.user_id, 'follow')}>Follow</button>
-            )
+            return <button className="btn btn-success" onClick={(e) => follow(data.info.user_id, 'follow')}>Follow</button>
         }
     }
 
 
     /**
      * Makes the request to follow/unfollow a user.
-     * 
-     * @param {*} user 
-     * @param {*} followType 
+     *
+     * @param {*} user
+     * @param {*} followType
      */
     const follow = (user, followType) => {
-        console.log(`Going to ${followType} user ${user}`);
-
         Axios({
-            method: followType == 'unfollow' ? 'delete' : 'post',
+            method: followType === 'unfollow' ? 'delete' : 'post',
             url: `/api/following.php?id=${user}`,
             data: {},
             headers: buildHeader()
         }).then(res => {
-            if (followType == 'unfollow') {
-                data.info.follower_count -= 1;
-            } else {
-                data.info.following_count += 1;
+                if (followType === 'unfollow') {
+                    setFollowers(followers - 1);
+                    setIsFollowing(false);
+                } else {
+                    setFollowers(followers + 1);
+                    setIsFollowing(true);
+                }
             }
-        }
         ).catch(err => console.error(err));
+    }
 
+    /**
+     * Reloads the profile to bring in the new data after asking a question.
+     */
+    const onQuestionAsked = () => {
+        setCurrentTab('answers')
+        setLoading(true)
     }
 
     if (loading) {
         return (
-            <Loading />
+            <Loading/>
         )
     }
 
     return (
         <div>
-            <h2>{data.info.username}</h2>
+            <h1 className="display-4">{data.info.username}</h1>
 
             <p>
                 {!data.info.own_profile && followButton()}
@@ -94,20 +108,24 @@ export const Profile = () => {
 
             <ul>
                 <li><strong>Joined:</strong> {data.info.created_at}</li>
-                <li><strong>Followers:</strong> {data.info.follower_count}</li>
-                <li><strong>Following:</strong> {data.info.following_count}</li>
+                <li><strong>Followers:</strong> {followers}</li>
+                <li><strong>Following:</strong> {following}</li>
             </ul>
 
-            <ul className="nav nav-tabs nav-fill mb-2">
+            {!data.info.own_profile && <AskQuestion onQuestionAsked={onQuestionAsked} userId={id}/>}
+
+            <ul className="nav nav-pills nav-fill mb-2">
                 <li className="nav-item">
-                    <a className={`nav-link ${currentTab === 'questions' ? 'active' : ''}`} onClick={(e) => setCurrentTab('questions')}>Questions ({data.questions.length})</a>
+                    <a className={`nav-link ${currentTab === 'questions' ? 'active' : ''}`}
+                       onClick={(e) => setCurrentTab('questions')}>Questions ({data.questions.length})</a>
                 </li>
                 <li className={`nav-item ${currentTab === 'answers' ? 'active' : ''}`}>
-                    <a className={`nav-link ${currentTab === 'answers' ? 'active' : ''}`} onClick={(e) => setCurrentTab('answers')}>Answers ({data.answers.length})</a>
+                    <a className={`nav-link ${currentTab === 'answers' ? 'active' : ''}`}
+                       onClick={(e) => setCurrentTab('answers')}>Answers ({data.answers.length})</a>
                 </li>
             </ul>
 
-            <QuestionGrid questions={currentTab === 'questions' ? data.questions : data.answers} />
+            <QuestionGrid questions={currentTab === 'questions' ? data.questions : data.answers}/>
         </div>
     )
 }
