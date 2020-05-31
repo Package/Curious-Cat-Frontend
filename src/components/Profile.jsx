@@ -92,16 +92,11 @@ export const Profile = () => {
                 {!data.info.own_profile && followButton()}
             </p>
 
-            <dl>
-                <dt>Joined</dt>
-                <dd>{data.info.created_at}</dd>
-
-                <dt>Followers</dt>
-                <dd>{data.info.follower_count}</dd>
-
-                <dt>Following</dt>
-                <dd>{data.info.following_count}</dd>
-            </dl>
+            <ul>
+                <li><strong>Joined:</strong> {data.info.created_at}</li>
+                <li><strong>Followers:</strong> {data.info.follower_count}</li>
+                <li><strong>Following:</strong> {data.info.following_count}</li>
+            </ul>
 
             <ul className="nav nav-tabs nav-fill mb-2">
                 <li className="nav-item">
@@ -113,7 +108,6 @@ export const Profile = () => {
             </ul>
 
             <QuestionGrid questions={currentTab === 'questions' ? data.questions : data.answers} />
-
         </div>
     )
 }

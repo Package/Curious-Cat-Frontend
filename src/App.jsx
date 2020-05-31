@@ -6,6 +6,7 @@ import { Register } from './components/Register';
 import { Login } from './components/Login';
 import { Logout } from './components/Logout';
 import { Profile } from './components/Profile';
+import { Explore } from './components/Explore';
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                     <Switch>
                         <Route path="/" exact component={Home} />
                         <Route path="/profile/:id?" component={Profile} />
+                        <Route path="/explore/:search?" component={Explore} />
                         <Route path="/register" component={Register} />
                         <Route path="/login" component={Login} />
                         <Route path="/logout" component={Logout} />

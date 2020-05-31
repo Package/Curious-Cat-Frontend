@@ -27,6 +27,9 @@ export const Navbar = () => {
                     {isLoggedIn() &&
                         <>
                             <li className="nav-item">
+                                <Link to="/explore" className="nav-link">Explore</Link>
+                            </li>
+                            <li className="nav-item">
                                 <Link to="/profile" className="nav-link">My Profile</Link>
                             </li>
                             <li className="nav-item">
