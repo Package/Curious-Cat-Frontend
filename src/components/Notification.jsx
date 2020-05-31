@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import useNotification from "../hooks/useNotification";
+import Moment from "react-moment";
 
 export const Notification = () => {
 
@@ -37,7 +38,9 @@ export const Notification = () => {
                         <Link to={`/answer/${n.context_id}`} className="btn btn-sm btn-primary">Answer</Link>
                     </p>
                 }
-                <small className="text-muted"><time>{n.created_at}</time></small>
+                <small className="text-muted">
+                    <Moment fromNow date={n.created_at}/>
+                </small>
             </div>)}
         </React.Fragment>
     );
