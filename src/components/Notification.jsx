@@ -1,25 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import Axios from "axios";
+import React from 'react';
 import {Link} from 'react-router-dom';
-import {buildAuthorizationHeader} from "../auth";
+import useNotification from "../hooks/useNotification";
 
 export const Notification = () => {
 
-    const [notifications, setNotifications] = useState([])
-
-    useEffect(() => {
-        Axios.get('/api/notification.php', buildAuthorizationHeader())
-            .then(res => {
-                console.log(res);
-                setNotifications(res.data);
-            })
-    }, [])
+    const notifications = useNotification();
 
     /**
      * Is the notification about a question being asked?
-     *
-     * @param notif
-     * @returns {boolean}
      */
     const isQuestionNotification = (notif) => {
         return notif.notification_type_string === "asked you a question";
@@ -30,7 +18,7 @@ export const Notification = () => {
     }
 
     return (
-        <>
+        <React.Fragment>
             <h2>Your Notifications</h2>
 
             {notifications.map((n) => <div className="notification" key={n.id}>
@@ -51,6 +39,6 @@ export const Notification = () => {
                 }
                 <small className="text-muted"><time>{n.created_at}</time></small>
             </div>)}
-        </>
+        </React.Fragment>
     );
 };

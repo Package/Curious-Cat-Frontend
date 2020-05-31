@@ -29,9 +29,7 @@ export const AskQuestion = ({userId, onQuestionAsked}) => {
                 "name_hidden": anonymous
             },
             headers: buildHeader()
-        }).then(res => {
-            onQuestionAsked();
-        }).catch(err => console.log(err))
+        }).then(_ => onQuestionAsked()).catch(err => console.log(err))
     }
 
     return (

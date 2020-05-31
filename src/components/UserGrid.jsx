@@ -8,7 +8,7 @@ export const UserGrid = ({ users }) => {
     }
 
     return (
-        <>
+        <React.Fragment>
             {users.map(u =>
                 <div key={u.id} className="user">
                     <strong>
@@ -17,6 +17,6 @@ export const UserGrid = ({ users }) => {
                     <p><small className="text-muted">Joined <time>{u.created_at}</time></small></p>
                 </div>
             )}
-        </>
+        </React.Fragment>
     )
 }

@@ -1,42 +1,30 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useParams} from 'react-router-dom';
 import Axios from "axios";
 import {buildHeader} from "../auth";
+import {formatUsername, objectIsEmpty} from "../utils";
+import useQuestion from "../hooks/useQuestion";
 
 export const Answer = () => {
 
     const {questionId} = useParams();
-    const [label, setLabel] = useState('');
-    const [question, setQuestion] = useState({});
+    const question = useQuestion(questionId)
 
-    useEffect(() => {
-        if (questionId !== undefined && questionId > 0) {
-            Axios({
-                method: 'get',
-                url: `/api/question.php?id=${questionId}`,
-                headers: buildHeader()
-            }).then(res => {
-                console.log(res.data);
-                setQuestion(res.data[0]);
-            }).catch(err => console.error((err)));
-        }
-    }, [questionId])
+    const [answerLabel, setAnswerLabel] = useState('');
 
     /**
      * Handles adding an answer
-     *
-     * @param e
      */
     const onSubmit = (e) => {
         e.preventDefault();
 
-        if (label.length > 0) {
+        if (answerLabel.length > 0) {
             Axios({
                 method: 'post',
                 url: `/api/answer.php`,
                 data: {
                     "question_id": questionId,
-                    "label": label
+                    "label": answerLabel
                 },
                 headers: buildHeader()
             }).then(res => {
@@ -45,21 +33,9 @@ export const Answer = () => {
         }
     }
 
-    /**
-     * Do we have a question loaded?
-     * @returns {boolean}
-     */
-    const hasQuestion = () => {
-        return Object.keys(question).length > 0;
-    }
-
-    const formatUsername = (username) => {
-        return username == null ? 'Anonymous' : username;
-    }
-
     return (
         <div>
-            {hasQuestion() &&
+            {!objectIsEmpty(question) &&
             <div>
                 <h2>{question.label}</h2>
                 <p className="text-muted">{formatUsername(question.from_username)} <time>{question.created_at}</time></p>
@@ -68,7 +44,7 @@ export const Answer = () => {
 
             <form onSubmit={onSubmit}>
                 <div className="form-group">
-                    <textarea className="form-control" rows="3" id="label" name="label" value={label} onChange={(e) => setLabel(e.target.value)} placeholder="Add your answer"/>
+                    <textarea className="form-control" rows="3" id="label" name="label" value={answerLabel} onChange={(e) => setAnswerLabel(e.target.value)} placeholder="Add your answer"/>
                 </div>
 
                 <button type="submit" className="btn btn-primary">Submit</button>

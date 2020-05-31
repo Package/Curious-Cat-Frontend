@@ -30,7 +30,7 @@ export const Register = () => {
     }
 
     return (
-        <>
+        <React.Fragment>
             <h2>Create your Account</h2>
 
             {error.length > 0 &&
@@ -51,29 +51,25 @@ export const Register = () => {
                 <div className="form-group">
                     <label htmlFor="username">Username</label>
                     <input type="text" className="form-control" id="username" aria-describedby="usernameHelp" placeholder="Choose Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-                    {/* <small id="usernameHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="emailAddress">Email address</label>
                     <input type="email" className="form-control" id="emailAddress" aria-describedby="emailHelp" placeholder="Enter Email Address" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} />
-                    {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="password">Password</label>
                     <input type="password" className="form-control" id="password" aria-describedby="passwordHelp" placeholder="Choose Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    {/* <small id="passwordHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="confirmPassword">Confirm password</label>
                     <input type="password" className="form-control" id="confirmPassword" aria-describedby="confirmPasswordHelp" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-                    {/* <small id="confirmPasswordHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
                 </div>
 
                 <button type="submit" className="btn btn-primary">Register</button>
             </form>
-        </>
+        </React.Fragment>
     )
 }

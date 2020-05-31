@@ -1,27 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {Link} from 'react-router-dom'
-import {buildAuthorizationHeader, isLoggedIn} from '../auth';
-import Axios from "axios";
+import { isLoggedIn} from '../auth';
+import useNotification from "../hooks/useNotification";
 
 export const Navbar = () => {
 
-    const [notificationCount, setNotificationCount] = useState(0)
-
-    useEffect(() => {
-        if (!isLoggedIn())
-            return false;
-
-        Axios.get('/api/notification.php', buildAuthorizationHeader())
-            .then(res => {
-                console.log(res);
-
-                if (res.data != null) {
-                    setNotificationCount(res.data.length);
-                } else {
-                    setNotificationCount(0);
-                }
-            })
-    }, [])
+    const notifications = useNotification();
 
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -43,7 +27,7 @@ export const Navbar = () => {
                             </li>
                             <li className="nav-item">
                                 <Link to="/notifications" className="nav-link">Notifications
-                                    <span className="badge badge-light ml-1">{notificationCount}</span>
+                                    <span className="badge badge-light ml-1">{notifications.length}</span>
                                 </Link>
                             </li>
                             <li className="nav-item">
@@ -71,7 +55,6 @@ export const Navbar = () => {
                             </li>
                         </ul>
                     }
-
                 </div>
             </div>
         </nav>

@@ -23,9 +23,8 @@ export const Login = () => {
         });
     }
 
-
     return (
-        <>
+        <React.Fragment>
             <h2>Login to your Account</h2>
 
             {error.length > 0 &&
@@ -52,6 +51,6 @@ export const Login = () => {
 
                 <button type="submit" className="btn btn-primary">Login</button>
             </form>
-        </>
+        </React.Fragment>
     )
 }

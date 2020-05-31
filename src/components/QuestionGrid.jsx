@@ -1,4 +1,5 @@
 import React from 'react'
+import {formatUsername} from "../utils";
 
 export const QuestionGrid = ({ questions }) => {
 
@@ -6,12 +7,8 @@ export const QuestionGrid = ({ questions }) => {
         return <p>No Questions to show.</p>
     }
 
-    const formatUsername = (username) => {
-        return username == null ? 'Anonymous' : username;
-    }
-
     return (
-        <>
+        <React.Fragment>
             {questions.map((t, i) => (
                 <div key={i} className="question">
                     <strong>{t.question_label}</strong>
@@ -21,6 +18,6 @@ export const QuestionGrid = ({ questions }) => {
                     </p>
                 </div>
             ))}
-        </>
+        </React.Fragment>
     )
 }
