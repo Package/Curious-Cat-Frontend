@@ -1,12 +1,12 @@
-import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
-import useNotification from "../hooks/useNotification";
-import { UserContext } from '../context/UserContext';
+import React, {useContext} from 'react'
+import {Link} from 'react-router-dom'
+import {UserContext} from '../context/UserContext';
+import {NotificationContext} from "../context/NotificationContext";
 
 export const Navbar = () => {
 
-    const notifications = useNotification();
     const user = useContext(UserContext);
+    const notifications = useContext(NotificationContext);
 
     return (
         <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
@@ -28,7 +28,8 @@ export const Navbar = () => {
                                 </li>
                                 <li className="nav-item">
                                     <Link to="/notifications" className="nav-link">Notifications
-                                    <span className="badge badge-light ml-1">{notifications.length}</span>
+                                        <span
+                                            className="badge badge-light ml-1">{notifications.notifications.length}</span>
                                     </Link>
                                 </li>
                                 <li className="nav-item">

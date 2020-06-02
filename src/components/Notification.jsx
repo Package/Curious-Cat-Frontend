@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
-import useNotification from "../hooks/useNotification";
 import Moment from "react-moment";
 import {ProfileInitials} from "./ProfileInitials";
+import {NotificationContext} from "../context/NotificationContext";
 
 export const Notification = () => {
 
-    const notifications = useNotification();
+    const ctx = useContext(NotificationContext);
 
     /**
      * Is the notification about a question being asked?
@@ -15,7 +15,7 @@ export const Notification = () => {
         return notif.notification_type_string === "asked you a question";
     }
 
-    if (notifications.length === 0) {
+    if (ctx.notifications.length === 0) {
         return <p>You have no new notifications.</p>
     }
 
@@ -23,28 +23,33 @@ export const Notification = () => {
         <React.Fragment>
             <h2>Your Notifications</h2>
 
-            {notifications.map((n) => <div className="notification" key={n.id}>
+            {ctx.notifications.map((n) => <div className="notification" key={n.id}>
                 <p>
-                    <ProfileInitials username={n.from_username} />
+                    <ProfileInitials username={n.from_username}/>
                     <Link to={`/profile/${n.from_user}`}>
                         {n.from_username}
                     </Link> {n.notification_type_string}
+
+                    &nbsp;
+                    <small className="text-muted">
+                        <Moment fromNow date={n.created_at}/>
+                    </small>
                 </p>
 
                 {n.context != null &&
-                    <p>
-                        <i>{n.context}</i>
-                    </p>
+                <p>
+                    <i>{n.context}</i>
+                </p>
                 }
 
                 {isQuestionNotification(n) &&
-                    <p>
-                        <Link to={`/answer/${n.context_id}`} className="btn btn-sm btn-primary">Answer</Link>
-                    </p>
+                <p>
+                    <Link to={`/answer/${n.context_id}`} className="btn btn-sm btn-primary">Answer</Link>
+                </p>
                 }
-                <small className="text-muted">
-                    <Moment fromNow date={n.created_at}/>
-                </small>
+
+                <button className="btn btn-outline-primary btn-sm" onClick={e => ctx.readNotification(n.id)}>Dismiss
+                </button>
             </div>)}
         </React.Fragment>
     );

@@ -1,7 +1,7 @@
-import React, { useState, useContext, useReducer } from 'react'
+import React, {useContext, useReducer} from 'react'
 import Axios from 'axios';
-import { Redirect } from 'react-router-dom';
-import { UserContext } from '../../context/UserContext';
+import {Redirect} from 'react-router-dom';
+import {UserContext} from '../../context/UserContext';
 import loginReducer from '../../reducers/loginReducer';
 
 const initialState = {
