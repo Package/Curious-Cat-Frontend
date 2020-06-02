@@ -10,24 +10,31 @@ $intelBlue: #0c0032
 $navColour: #e85d04
 $primaryButtonColour: #e85d04
 $initialColour: #faa307
+$fontStack: 'Open Sans', Arial, sans-serif
+
+*
+  font-family: $fontStack
 
 body
-    background: $bodyColor
+  background: $bodyColor
 
 #contentWrapper
-    margin-top: 20px
+  margin-top: 20px
 
 .btn-primary
-    border: none
+  border: none
 
 .btn-primary
-    background: $primaryButtonColour !important
+  background: $primaryButtonColour !important
+
+h1, h2, h3, h4, h5, h6
+  font-weight: 300
 
 a
-    color: $primaryButtonColour
+  color: $primaryButtonColour
 
-    &:hover
-        color: $primaryButtonColour
+  &:hover
+    color: $primaryButtonColour
 
 .navbar
     background: $navColour !important
@@ -53,11 +60,17 @@ a
     background: $initialColour
 
 .panel
-    h1, h2, h3, h4, h5, h6
-        border-bottom: 1px solid #eee
-        font-size: 1em
-        margin-bottom: 1em
-        padding-bottom: .25em
+  h1, h2, h3, h4, h5, h6
+    border-bottom: 1px solid #eee
+    font-size: 1em
+    margin-bottom: .5em
+    padding-bottom: .25em
+    font-weight: 300
+
+  li
+    border: 0
+    padding: .5em 0
+
 
 .question
     padding-top: 1.5em

@@ -21,6 +21,7 @@ export const AskQuestion = ({userId}) => {
 
         if (question.length === 0) {
             setError('Please enter something to ask!');
+            clearMessages();
             return false;
         }
 
@@ -37,8 +38,17 @@ export const AskQuestion = ({userId}) => {
             setSuccess('Your question has been asked.');
             setError('');
             setQuestion('');
+            clearMessages()
         }).catch(err => setError(err.response.data.message))
     }
+
+    const clearMessages = () => {
+        setTimeout(() => {
+            setError('')
+            setSuccess('')
+        }, 2000)
+    }
+
 
     return (
         <div className="panel">

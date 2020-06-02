@@ -1,15 +1,18 @@
 
-export const getAcessToken = () => {
+export const getAccessToken = () => {
     return localStorage.getItem("authToken");
 }
 
 export const isLoggedIn = () => {
-    return getAcessToken() != null;
+    return getAccessToken() != null;
 }
 
 export const buildHeader = () => {
+    if (!isLoggedIn())
+        return {}
+
     return {
-        'Authorization': `Bearer ${getAcessToken()}`
+        'Authorization': `Bearer ${getAccessToken()}`
     }
 }
 

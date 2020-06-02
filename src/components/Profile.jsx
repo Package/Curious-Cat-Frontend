@@ -6,6 +6,7 @@ import {useParams} from 'react-router-dom';
 import {QuestionGrid} from './QuestionGrid';
 import {AskQuestion} from "./AskQuestion";
 import {FollowButton} from "./FollowButton";
+import Moment from "react-moment";
 
 export const Profile = () => {
 
@@ -71,9 +72,11 @@ export const Profile = () => {
                 <FollowButton userId={id} isFollowing={isFollowing}
                               ownProfile={data.info.own_profile} onFollow={onFollow}/>
                 <ul>
-                    <li><strong>Joined:</strong> {data.info.created_at}</li>
-                    <li><strong>Followers:</strong> {followers}</li>
-                    <li><strong>Following:</strong> {following}</li>
+                    <li><strong>Joined: </strong>
+                        <Moment fromNow date={data.info.created_at}/>
+                    </li>
+                    <li><strong>Followers: </strong>{followers}</li>
+                    <li><strong>Following: </strong>{following}</li>
                 </ul>
             </div>
 

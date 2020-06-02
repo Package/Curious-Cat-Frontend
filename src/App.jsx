@@ -22,18 +22,17 @@ function App() {
                     <Navbar/>
 
                     <Switch>
-                        <Route path={["/register", "/login", "/logout"]}>
+                        <Route path={["/register", "/login"]}>
                             <NotAuthenticatedLayout>
                                 <Switch>
                                     <Route path="/register" component={Register}/>
                                     <Route path="/login" component={Login}/>
-                                    <Route path="/logout" component={Logout}/>
                                 </Switch>
                             </NotAuthenticatedLayout>
                         </Route>
 
                         <Route
-                            path={["/profile/:id?", "/answer/:questionId", "/search/:search?", "/notifications", "/"]}>
+                            path={["/profile/:id?", "/answer/:questionId", "/search/:search?", "/notifications", "/logout", "/"]}>
                             <AuthenticatedLayout>
                                 <Switch>
                                     <Route path="/" exact component={Home}/>
@@ -41,6 +40,7 @@ function App() {
                                     <Route path="/answer/:questionId" component={Answer}/>
                                     <Route path="/search/:search?" component={Search}/>
                                     <Route path="/notifications" component={Notification}/>
+                                    <Route path="/logout" component={Logout}/>
                                 </Switch>
                             </AuthenticatedLayout>
                         </Route>

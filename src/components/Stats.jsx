@@ -18,7 +18,6 @@ export const Stats = () => {
                 url: '/api/stats.php',
                 headers: buildHeader()
             }).then(res => {
-                console.log(res.data)
                 setQuestions(res.data.questions);
                 setAnswers(res.data.answers);
                 setNewest(res.data.newest);
@@ -33,9 +32,9 @@ export const Stats = () => {
 
     return (
         <React.Fragment>
-            <StatBlock data={newest} title="Newest Members"/>
-            <StatBlock data={questions} title="Most Questions"/>
-            <StatBlock data={answers} title="Most Answers"/>
+            <StatBlock data={newest} title="Newest Members" hasDate={true}/>
+            <StatBlock data={questions} title="Most Questions" hasDate={false}/>
+            <StatBlock data={answers} title="Most Answers" hasDate={false}/>
         </React.Fragment>
     );
 };

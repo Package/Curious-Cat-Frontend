@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import Moment from "react-moment";
 import {ProfileInitials} from "./ProfileInitials";
 
@@ -14,12 +14,12 @@ export const UserGrid = ({ users }) => {
             {users.map(u =>
                 <div key={u.id} className="user">
                     <strong>
-                        <ProfileInitials username={u.username} />
+                        <ProfileInitials username={u.username}/>
                         <Link to={`/profile/${u.id}`}>{u.username}</Link>
                     </strong>
-                    <p>
-                        <small className="text-muted">Joined <Moment fromNow date={u.created_at} /> </small>
-                    </p>
+                    <div>
+                        <small className="text-muted">Joined <Moment fromNow date={u.created_at}/> </small>
+                    </div>
                 </div>
             )}
         </React.Fragment>

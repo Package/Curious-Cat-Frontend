@@ -6,6 +6,24 @@ import {Link} from "react-router-dom";
 
 export const QuestionGrid = ({ questions }) => {
 
+    const displayUsername = (t) => {
+        if (t.question_name_hidden) {
+            return (
+                <React.Fragment>
+                    {formatUsername(t.from_user_name)}
+                </React.Fragment>
+            )
+        } else {
+            return (
+                <React.Fragment>
+                    <Link to={`/profile/${t.from_user}`}>
+                        {formatUsername(t.from_user_name)}
+                    </Link>
+                </React.Fragment>
+            )
+        }
+    }
+
     /**
      * Returns only the questions where an answer has been provided
      */
@@ -25,9 +43,7 @@ export const QuestionGrid = ({ questions }) => {
                 <div className="question" key={i}>
                     <div className="question--header">
                         <ProfileInitials username={formatUsername(t.from_user_name)} />
-                        <Link to={`/profile/${t.from_user}`}>
-                            {formatUsername(t.from_user_name)}
-                        </Link>
+                        {displayUsername(t)}
                         <small className="timestamp"><Moment fromNow date={t.question_timestamp} /></small>
                         <p className="label">{t.question_label}</p>
                     </div>

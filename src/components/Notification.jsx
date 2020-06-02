@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 import Moment from "react-moment";
 import {ProfileInitials} from "./ProfileInitials";
 import {NotificationContext} from "../context/NotificationContext";
-import {Stats} from "./Stats";
 
 export const Notification = () => {
 
@@ -16,47 +15,56 @@ export const Notification = () => {
         return notif.notification_type_string === "asked you a question";
     }
 
+    const displayUsername = (n) => {
+        if (n.hidden) {
+            return (
+                <React.Fragment>
+                    {n.from_username} {n.notification_type_string}
+                </React.Fragment>
+            )
+        } else {
+            return (
+                <React.Fragment>
+                    <Link to={`/profile/${n.from_user}`}>
+                        {n.from_username}
+                    </Link> {n.notification_type_string}
+                </React.Fragment>
+            )
+        }
+    }
+
     if (ctx.notifications.length === 0) {
         return <p>You have no new notifications.</p>
     }
 
     return (
-        <div className="row">
-            <div className="col-md-4">
-                <Stats/>
-            </div>
+        <React.Fragment>
+            <h2>Your Notifications</h2>
+            {ctx.notifications.map((n) => <div className="notification" key={n.id}>
+                <p>
+                    <ProfileInitials username={n.from_username}/>
+                    {displayUsername(n)}
+                    &nbsp;
+                    <small className="text-muted">
+                        <Moment fromNow date={n.created_at}/>
+                    </small>
+                </p>
 
-            <div className="col-md-8">
-                <h2>Your Notifications</h2>
-                {ctx.notifications.map((n) => <div className="notification" key={n.id}>
-                    <p>
-                        <ProfileInitials username={n.from_username}/>
-                        <Link to={`/profile/${n.from_user}`}>
-                            {n.from_username}
-                        </Link> {n.notification_type_string}
+                {n.context != null &&
+                <p>
+                    <i>{n.context}</i>
+                </p>
+                }
 
-                        &nbsp;
-                        <small className="text-muted">
-                            <Moment fromNow date={n.created_at}/>
-                        </small>
-                    </p>
+                {isQuestionNotification(n) &&
+                <p>
+                    <Link to={`/answer/${n.context_id}`} className="btn btn-sm btn-primary">Answer</Link>
+                </p>
+                }
 
-                    {n.context != null &&
-                    <p>
-                        <i>{n.context}</i>
-                    </p>
-                    }
-
-                    {isQuestionNotification(n) &&
-                    <p>
-                        <Link to={`/answer/${n.context_id}`} className="btn btn-sm btn-primary">Answer</Link>
-                    </p>
-                    }
-
-                    <button className="btn btn-outline-primary btn-sm" onClick={e => ctx.readNotification(n.id)}>Dismiss
-                    </button>
-                </div>)}
-            </div>
-        </div>
+                <button className="btn btn-outline-primary btn-sm" onClick={e => ctx.readNotification(n.id)}>Dismiss
+                </button>
+            </div>)}
+        </React.Fragment>
     );
 };

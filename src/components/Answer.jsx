@@ -1,18 +1,17 @@
 import React, {useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {Redirect, useParams} from 'react-router-dom';
 import Axios from "axios";
 import {buildHeader} from "../auth";
 import {formatUsername, objectIsEmpty} from "../utils";
 import useQuestion from "../hooks/useQuestion";
 import {Loading} from "./Loading";
 import {FlashMessage} from "./FlashMessage";
-import { Redirect } from 'react-router-dom';
 import Moment from "react-moment";
 
 export const Answer = () => {
 
     const {questionId} = useParams();
-    const question = useQuestion(questionId)
+    const question = useQuestion(questionId);
 
     const [answerLabel, setAnswerLabel] = useState('');
     const [success, setSuccess] = useState('');

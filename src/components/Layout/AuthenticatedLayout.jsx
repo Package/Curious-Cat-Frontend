@@ -1,16 +1,27 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Stats} from "../Stats";
+import {Redirect} from 'react-router-dom';
+import {UserContext} from "../../context/UserContext";
 
-export const AuthenticatedLayout = (props) => (
-    <div id="contentWrapper" className="container">
-        <div className="row">
-            <div className="col-md-4">
-                <Stats/>
-            </div>
+export const AuthenticatedLayout = (props) => {
 
-            <div className="col-md-8">
-                {props.children}
+    const user = useContext(UserContext);
+
+    if (!user.loggedIn) {
+        return <Redirect to="/login"/>
+    }
+
+    return (
+        <div id="contentWrapper" className="container">
+            <div className="row">
+                <div className="col-md-4">
+                    <Stats/>
+                </div>
+
+                <div className="col-md-8">
+                    {props.children}
+                </div>
             </div>
         </div>
-    </div>
-);
+    )
+};

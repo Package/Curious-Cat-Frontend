@@ -14,5 +14,9 @@ export const formatUsername = (username) => {
  * @returns {boolean}
  */
 export const objectIsEmpty = (object) => {
+    if (object === null || object === undefined) {
+        return true;
+    }
+
     return Object.keys(object).length === 0;
 }

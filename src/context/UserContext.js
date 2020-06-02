@@ -1,17 +1,12 @@
-import React, {createContext, useEffect, useState} from 'react';
-import {getAcessToken, isLoggedIn} from '../auth';
+import React, {createContext, useState} from 'react';
+import {getAccessToken, isLoggedIn} from '../auth';
 
 export const UserContext = createContext(false);
 
 export const UserProvider = ({children}) => {
 
-    const [authToken, setAuthToken] = useState(null);
-    const [loggedIn, setLoggedIn] = useState(false);
-
-    useEffect(() => {
-        setLoggedIn(isLoggedIn());
-        setAuthToken(getAcessToken())
-    }, []);
+    const [authToken, setAuthToken] = useState(getAccessToken());
+    const [loggedIn, setLoggedIn] = useState(isLoggedIn());
 
     const login = (authToken) => {
         localStorage.setItem("authToken", authToken);
