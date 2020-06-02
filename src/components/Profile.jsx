@@ -6,7 +6,6 @@ import {useParams} from 'react-router-dom';
 import {QuestionGrid} from './QuestionGrid';
 import {AskQuestion} from "./AskQuestion";
 import {FollowButton} from "./FollowButton";
-import {Stats} from "./Stats";
 
 export const Profile = () => {
 
@@ -65,30 +64,22 @@ export const Profile = () => {
     }
 
     return (
-        <div>
-            <div className="row">
-                <div className="col-md-4">
-                    {!data.info.own_profile && <AskQuestion userId={id}/>}
-                    <Stats/>
-                </div>
+        <React.Fragment>
+            <h2>{data.info.username}</h2>
 
-                <div className="col-md-8">
-                    <h2>{data.info.username}</h2>
-
-                    <div className="panel">
-                        <FollowButton userId={id} isFollowing={isFollowing}
-                                      ownProfile={data.info.own_profile} onFollow={onFollow}/>
-                        <ul>
-                            <li><strong>Joined:</strong> {data.info.created_at}</li>
-                            <li><strong>Followers:</strong> {followers}</li>
-                            <li><strong>Following:</strong> {following}</li>
-                        </ul>
-                    </div>
-
-                    <QuestionGrid questions={data.answers}/>
-                </div>
+            <div className="panel">
+                <FollowButton userId={id} isFollowing={isFollowing}
+                              ownProfile={data.info.own_profile} onFollow={onFollow}/>
+                <ul>
+                    <li><strong>Joined:</strong> {data.info.created_at}</li>
+                    <li><strong>Followers:</strong> {followers}</li>
+                    <li><strong>Following:</strong> {following}</li>
+                </ul>
             </div>
 
-        </div>
+            {!data.info.own_profile && <AskQuestion userId={id}/>}
+
+            <QuestionGrid questions={data.answers}/>
+        </React.Fragment>
     )
 }
