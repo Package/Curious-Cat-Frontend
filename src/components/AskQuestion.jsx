@@ -49,7 +49,8 @@ export const AskQuestion = ({userId}) => {
 
                 <form onSubmit={askQuestion}>
                     <div className="form-group">
-                        <textarea className="form-control" id="question" rows="7" placeholder="Enter Question..." value={question} onChange={(e) => setQuestion(e.target.value)}/>
+                        <textarea className="form-control" id="question" rows="3" placeholder="Enter Question..."
+                                  value={question} onChange={(e) => setQuestion(e.target.value)}/>
                     </div>
                     <div className="form-check mb-2">
                         <input type="checkbox" className="form-check-input" id="anonymous" value={anonymous} onChange={(e) => setAnonymous(e.target.checked)}/>
