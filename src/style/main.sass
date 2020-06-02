@@ -4,7 +4,12 @@ $borderColour: #dee2e6
 $bodyColor: #f3f3f3
 $contentColor: #fff
 $textColor: #f7f7f7
-$intelBlue: #0071c5
+//$intelBlue: #0071c5
+$intelBlue: #0c0032
+
+$navColour: #e85d04
+$primaryButtonColour: #e85d04
+$initialColour: #faa307
 
 body
     background: $bodyColor
@@ -13,17 +18,26 @@ body
     margin-top: 20px
 
 .btn-primary
-    background: $intelBlue !important
+    border: none
+
+.btn-primary
+    background: $primaryButtonColour !important
+
+a
+    color: $primaryButtonColour
+
+    &:hover
+        color: $primaryButtonColour
 
 .navbar
-    background: $intelBlue !important
+    background: $navColour !important
 
 .question, .user, .notification, .panel
     border-radius: 5px
     margin-bottom: 1em
     background: $contentColor
     padding: 1em 1em .5em 1em
-    box-shadow: 0 0 5px 0 rgba(0,0,0,.3)
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, .3)
 
 .timestamp
     color: #6c757d
@@ -36,7 +50,7 @@ body
     color: #ffffff
     font-weight: bold
     text-transform: uppercase
-    background: $intelBlue
+    background: $initialColour
 
 .panel
     h1, h2, h3, h4, h5, h6

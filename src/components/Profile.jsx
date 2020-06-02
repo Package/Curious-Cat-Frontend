@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import Axios from 'axios'
 import {Loading} from './Loading';
 import {buildAuthorizationHeader} from '../auth';
@@ -6,6 +6,7 @@ import {useParams} from 'react-router-dom';
 import {QuestionGrid} from './QuestionGrid';
 import {AskQuestion} from "./AskQuestion";
 import {FollowButton} from "./FollowButton";
+import {Stats} from "./Stats";
 
 export const Profile = () => {
 
@@ -67,8 +68,12 @@ export const Profile = () => {
         <div>
             <div className="row">
                 <div className="col-md-4">
+                    {!data.info.own_profile && <AskQuestion userId={id}/>}
+                    <Stats/>
+                </div>
 
-                    <h1 className="display-4">{data.info.username}</h1>
+                <div className="col-md-8">
+                    <h2>{data.info.username}</h2>
 
                     <div className="panel">
                         <FollowButton userId={id} isFollowing={isFollowing}
@@ -80,10 +85,6 @@ export const Profile = () => {
                         </ul>
                     </div>
 
-                    {!data.info.own_profile && <AskQuestion userId={id}/>}
-
-                </div>
-                <div className="col-md-8">
                     <QuestionGrid questions={data.answers}/>
                 </div>
             </div>

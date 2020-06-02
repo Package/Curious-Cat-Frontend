@@ -24,7 +24,7 @@ export const Navbar = () => {
                         {user.loggedIn &&
                             <>
                                 <li className="nav-item">
-                                    <Link to="/explore" className="nav-link">Explore</Link>
+                                    <Link to="/search" className="nav-link">Search</Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link to="/notifications" className="nav-link">Notifications

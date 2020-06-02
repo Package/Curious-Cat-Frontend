@@ -6,7 +6,7 @@ import {Register} from './components/Auth/Register';
 import {Login} from './components/Auth/Login';
 import {Logout} from './components/Auth/Logout';
 import {Profile} from './components/Profile';
-import {Explore} from './components/Explore';
+import {Search} from './components/Search';
 import {Notification} from "./components/Notification";
 import {Answer} from "./components/Answer";
 import {UserProvider} from './context/UserContext';
@@ -23,7 +23,7 @@ function App() {
                             <Route path="/" exact component={Home}/>
                             <Route path="/profile/:id?" component={Profile}/>
                             <Route path="/answer/:questionId" component={Answer}/>
-                            <Route path="/explore/:search?" component={Explore}/>
+                            <Route path="/search/:search?" component={Search}/>
                             <Route path="/notifications" component={Notification}/>
                             <Route path="/register" component={Register}/>
                             <Route path="/login" component={Login}/>

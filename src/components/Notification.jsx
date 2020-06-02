@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import Moment from "react-moment";
 import {ProfileInitials} from "./ProfileInitials";
 import {NotificationContext} from "../context/NotificationContext";
+import {Stats} from "./Stats";
 
 export const Notification = () => {
 
@@ -20,37 +21,42 @@ export const Notification = () => {
     }
 
     return (
-        <React.Fragment>
-            <h2>Your Notifications</h2>
+        <div className="row">
+            <div className="col-md-4">
+                <Stats/>
+            </div>
 
-            {ctx.notifications.map((n) => <div className="notification" key={n.id}>
-                <p>
-                    <ProfileInitials username={n.from_username}/>
-                    <Link to={`/profile/${n.from_user}`}>
-                        {n.from_username}
-                    </Link> {n.notification_type_string}
+            <div className="col-md-8">
+                <h2>Your Notifications</h2>
+                {ctx.notifications.map((n) => <div className="notification" key={n.id}>
+                    <p>
+                        <ProfileInitials username={n.from_username}/>
+                        <Link to={`/profile/${n.from_user}`}>
+                            {n.from_username}
+                        </Link> {n.notification_type_string}
 
-                    &nbsp;
-                    <small className="text-muted">
-                        <Moment fromNow date={n.created_at}/>
-                    </small>
-                </p>
+                        &nbsp;
+                        <small className="text-muted">
+                            <Moment fromNow date={n.created_at}/>
+                        </small>
+                    </p>
 
-                {n.context != null &&
-                <p>
-                    <i>{n.context}</i>
-                </p>
-                }
+                    {n.context != null &&
+                    <p>
+                        <i>{n.context}</i>
+                    </p>
+                    }
 
-                {isQuestionNotification(n) &&
-                <p>
-                    <Link to={`/answer/${n.context_id}`} className="btn btn-sm btn-primary">Answer</Link>
-                </p>
-                }
+                    {isQuestionNotification(n) &&
+                    <p>
+                        <Link to={`/answer/${n.context_id}`} className="btn btn-sm btn-primary">Answer</Link>
+                    </p>
+                    }
 
-                <button className="btn btn-outline-primary btn-sm" onClick={e => ctx.readNotification(n.id)}>Dismiss
-                </button>
-            </div>)}
-        </React.Fragment>
+                    <button className="btn btn-outline-primary btn-sm" onClick={e => ctx.readNotification(n.id)}>Dismiss
+                    </button>
+                </div>)}
+            </div>
+        </div>
     );
 };
