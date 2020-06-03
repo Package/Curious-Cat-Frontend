@@ -29,8 +29,8 @@ export const Register = () => {
             "password": password,
             "confirm_password": confirmPassword
         }).then(res => {
-            user.login(res.data.authorization_token);
-            dispatch({ type: "register", message: res.data.message })
+            user.login(res.data.authorization_token, res.data.username);
+            dispatch({type: "register", message: res.data.message})
         }).catch(err => {
             dispatch({ type: "error", message: err.response.data.message })
         });

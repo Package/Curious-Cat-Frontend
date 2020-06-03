@@ -14,7 +14,9 @@ export const NotificationProvider = ({children}) => {
         }
 
         Axios.get('/api/notification.php', buildAuthorizationHeader())
-            .then(res => setNotifications(res.data))
+            .then(res => {
+                setNotifications(res.data);
+            }).catch(err => console.log(err));
     }, [])
 
     const readNotification = (notificationId) => {

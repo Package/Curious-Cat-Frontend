@@ -24,8 +24,8 @@ export const Login = () => {
             "userOrEmail": usernameOrEmail,
             "password": password
         }).then(res => {
-            dispatch({ type: "login", message: res.data.message })
-            user.login(res.data.authorization_token);
+            dispatch({type: "login", message: res.data.message})
+            user.login(res.data.authorization_token, res.data.username);
         }).catch(err => {
             dispatch({ type: "error", message: err.response.data.message });
         });

@@ -1,6 +1,9 @@
-
 export const getAccessToken = () => {
     return localStorage.getItem("authToken");
+}
+
+export const getUsername = () => {
+    return localStorage.getItem("username");
 }
 
 export const isLoggedIn = () => {

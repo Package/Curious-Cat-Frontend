@@ -53,6 +53,9 @@ export const Navbar = () => {
                     {user.loggedIn &&
                         <ul className="navbar-nav justify-content-end">
                             <li className="nav-item justify-content-end">
+                                <Link to="/profile" className="nav-link">Hello {user.username}</Link>
+                            </li>
+                            <li className="nav-item justify-content-end">
                                 <Link to="/logout" className="nav-link">Logout</Link>
                             </li>
                         </ul>
