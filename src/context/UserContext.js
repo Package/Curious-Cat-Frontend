@@ -25,12 +25,18 @@ export const UserProvider = ({children}) => {
         setLoggedIn(false);
     }
 
+    const changeUsername = (newUsername) => {
+        localStorage.setItem("username", newUsername);
+        setUsername(newUsername);
+    }
+
     const providerValues = {
         authToken,
         loggedIn,
         username,
         login,
         logout,
+        changeUsername
     }
 
     return (
