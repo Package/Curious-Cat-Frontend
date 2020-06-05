@@ -18,6 +18,7 @@ export const Search = () => {
                 .then(res => {
                     setResults(res.data);
                     setSearching(false);
+                    console.log(res.data);
                 }).catch(err => console.log(err));
         }
     }, [searching, search])

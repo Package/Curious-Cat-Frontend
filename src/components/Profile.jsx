@@ -21,7 +21,6 @@ export const Profile = () => {
     useEffect(() => {
         if (loading || id !== data.info.user_id) {
             Axios.get(profileEndPoint(), buildAuthorizationHeader()).then(res => {
-                console.log(res.data);
                 setData(res.data);
                 setFollowers(res.data.info.follower_count);
                 setFollowing(res.data.info.following_count);
@@ -68,7 +67,7 @@ export const Profile = () => {
         <React.Fragment>
             <h2>
                 {data.info.photo_file &&
-                <img className="profile-photo" src={data.info.photo_file} alt="Profile Photo"/>}
+                <img className="photo" src={data.info.photo_file} alt="Profile Photo"/>}
                 {data.info.username}
             </h2>
 

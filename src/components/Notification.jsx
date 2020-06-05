@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
 import Moment from "react-moment";
-import {ProfileInitials} from "./ProfileInitials";
 import {NotificationContext} from "../context/NotificationContext";
+import {UserPhoto} from "./UserPhoto";
 
 export const Notification = () => {
 
@@ -42,7 +42,7 @@ export const Notification = () => {
             <h2>Your Notifications</h2>
             {ctx.notifications.map((n) => <div className="notification" key={n.id}>
                 <p>
-                    <ProfileInitials username={n.from_username}/>
+                    <UserPhoto photoPath={n.from_user_photo}/>
                     {displayUsername(n)}
                     &nbsp;
                     <small className="text-muted">

@@ -1,8 +1,8 @@
 import React from 'react'
 import {formatUsername} from "../utils";
 import Moment from "react-moment";
-import {ProfileInitials} from "./ProfileInitials";
 import {Link} from "react-router-dom";
+import {UserPhoto} from "./UserPhoto";
 
 export const QuestionGrid = ({ questions }) => {
 
@@ -42,14 +42,14 @@ export const QuestionGrid = ({ questions }) => {
             {actualQuestions.map((t, i) => (
                 <div className="question" key={i}>
                     <div className="question--header">
-                        <ProfileInitials username={formatUsername(t.from_user_name)} />
+                        <UserPhoto photoPath={t.from_user_photo}/>
                         {displayUsername(t)}
                         <small className="timestamp"><Moment fromNow date={t.question_timestamp} /></small>
                         <p className="label">{t.question_label}</p>
                     </div>
 
                     <div className="question--answer">
-                        <ProfileInitials username={formatUsername(t.target_user_name)} />
+                        <UserPhoto photoPath={t.target_user_photo}/>
                         <Link to={`/profile/${t.target_user}`}>
                             {formatUsername(t.target_user_name)}
                         </Link>

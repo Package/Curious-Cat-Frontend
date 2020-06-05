@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import {ProfileInitials} from "./ProfileInitials";
 import Moment from "react-moment";
+import {UserPhoto} from "./UserPhoto";
 
 export const StatBlock = ({data, title, hasDate}) => (
 
@@ -10,7 +10,7 @@ export const StatBlock = ({data, title, hasDate}) => (
         <ul className="list-group">
             {data.map((d, i) =>
                 <li className="list-group-item" key={i}>
-                    <ProfileInitials username={d.username}/>
+                    <UserPhoto photoPath={d.photo_file}/>
                     <Link to={`/profile/${d.id}`}>{d.username}</Link>
 
                     <small className="text-muted float-right">

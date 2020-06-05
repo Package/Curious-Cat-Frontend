@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import Moment from "react-moment";
-import {ProfileInitials} from "./ProfileInitials";
+import {UserPhoto} from "./UserPhoto";
 
 export const UserGrid = ({ users }) => {
 
@@ -14,7 +14,7 @@ export const UserGrid = ({ users }) => {
             {users.map(u =>
                 <div key={u.id} className="user">
                     <strong>
-                        <ProfileInitials username={u.username}/>
+                        <UserPhoto photoPath={u.photo_file}/>
                         <Link to={`/profile/${u.id}`}>{u.username}</Link>
                     </strong>
                     <div>
