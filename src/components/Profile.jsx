@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import Axios from 'axios'
 import {Loading} from './Loading';
 import {buildAuthorizationHeader} from '../auth';
-import {useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import {QuestionGrid} from './QuestionGrid';
 import {AskQuestion} from "./AskQuestion";
 import {FollowButton} from "./FollowButton";
@@ -66,11 +66,13 @@ export const Profile = () => {
 
     return (
         <React.Fragment>
-            <h2>{data.info.username}</h2>
+            <h2>
+                {data.info.photo_file &&
+                <img className="profile-photo" src={data.info.photo_file} alt="Profile Photo"/>}
+                {data.info.username}
+            </h2>
 
             <div className="panel">
-                <FollowButton userId={id} isFollowing={isFollowing}
-                              ownProfile={data.info.own_profile} onFollow={onFollow}/>
                 <ul>
                     <li><strong>Joined: </strong>
                         <Moment fromNow date={data.info.created_at}/>
@@ -78,6 +80,15 @@ export const Profile = () => {
                     <li><strong>Followers: </strong>{followers}</li>
                     <li><strong>Following: </strong>{following}</li>
                 </ul>
+
+                <FollowButton userId={id} isFollowing={isFollowing}
+                              ownProfile={data.info.own_profile} onFollow={onFollow}/>
+
+                {data.info.own_profile && <p>
+                    <Link className="profile-link btn btn-sm btn-outline-primary" to="/profile_photo">Change
+                        Photo</Link>
+                    <Link className="profile-link btn btn-sm btn-outline-primary" to="/settings">Edit Settings</Link>
+                </p>}
             </div>
 
             {!data.info.own_profile && <AskQuestion userId={id}/>}

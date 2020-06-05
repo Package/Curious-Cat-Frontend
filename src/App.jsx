@@ -14,6 +14,7 @@ import {NotificationProvider} from "./context/NotificationContext";
 import {AuthenticatedLayout} from "./components/Layout/AuthenticatedLayout";
 import {NotAuthenticatedLayout} from "./components/Layout/NotAuthenticatedLayout";
 import {Settings} from "./components/Settings";
+import {ChangePhoto} from "./components/ChangePhoto";
 
 function App() {
     return (
@@ -33,7 +34,7 @@ function App() {
                         </Route>
 
                         <Route
-                            path={["/profile/:id?", "/answer/:questionId", "/search/:search?", "/notifications", "/settings", "/logout", "/"]}>
+                            path={["/profile/:id?", "/answer/:questionId", "/search/:search?", "/notifications", "/settings", "/logout", "/profile_photo", "/"]}>
                             <AuthenticatedLayout>
                                 <Switch>
                                     <Route path="/" exact component={Home}/>
@@ -42,6 +43,7 @@ function App() {
                                     <Route path="/search/:search?" component={Search}/>
                                     <Route path="/notifications" component={Notification}/>
                                     <Route path="/settings" component={Settings}/>
+                                    <Route path="/profile_photo" component={ChangePhoto}/>
                                     <Route path="/logout" component={Logout}/>
                                 </Switch>
                             </AuthenticatedLayout>
